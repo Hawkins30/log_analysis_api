@@ -1,11 +1,12 @@
 from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from analyser import analyse_log_lines
-from database import Analysis, get_db
+from database import Analysis, get_db, Base, engine
 from sqlalchemy.orm import Session
+import JSON
 
 app = FastAPI()
-
+Base.metadata.create_all(bind=engine)
 
 class LogInput(BaseModel):
     text: str
@@ -27,7 +28,7 @@ def analyse_logs(data: LogInput, db: Session = Depends(get_db)):
     counts, malformed_lines = analyse_log_lines(lines)
 
     analysis = Analysis(
-        counts=counts,
+        counts=json.dumps(counts),
         total_lines=len(lines),
         malformed_lines=malformed_lines
     )
@@ -51,7 +52,7 @@ def get_analyses(db: Session = Depends(get_db)):
         {
             "id": a.id,
             "created_at": a.created_at,
-            "counts": a.counts,
+            "counts": json.loads(a.counts),
             "total_lines": a.total_lines,
             "malformed_lines": a.malformed_lines
         }

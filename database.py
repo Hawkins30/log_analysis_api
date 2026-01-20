@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column, Integer, DateTime, Text
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 DATABASE_URL = "sqlite:///database.db"
@@ -23,7 +23,7 @@ class Analysis(Base):
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    counts = Column(JSON)
+    counts = Column(Text)
     total_lines = Column(Integer)
     malformed_lines = Column(Integer)
 
