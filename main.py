@@ -6,7 +6,10 @@ from sqlalchemy.orm import Session
 import JSON
 
 app = FastAPI()
-Base.metadata.create_all(bind=engine)
+
+@app.on_event("startup")
+def on_startup():
+    Base.metadata.create_all(bind=engine)
 
 class LogInput(BaseModel):
     text: str

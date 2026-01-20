@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, DateTime, Text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
-DATABASE_URL = "sqlite:///database.db"
+DATABASE_URL = "sqlite:////tmp/database.db"
 
 engine = create_engine(
     DATABASE_URL,
