@@ -29,7 +29,7 @@ def analyse_logs(data: LogInput, db: Session = Depends(get_db)):
     lines = data.text.splitlines()
 
     counts, malformed_lines = analyse_log_lines(lines)
-
+    Base.metadata.create_all(bind=engine)
     analysis = Analysis(
         counts=json.dumps(counts),
         total_lines=len(lines),
