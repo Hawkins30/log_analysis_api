@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, DateTime, Text
 from sqlalchemy.orm import declarative_base, sessionmaker
-
+from datetime import datetime
 DATABASE_URL = "sqlite:///database.db"
 
 engine = create_engine(
@@ -11,11 +11,6 @@ engine = create_engine(
 SessionLocal = sessionmaker(bind=engine)
 
 Base = declarative_base()
-
-
-from sqlalchemy import Column, Integer, DateTime, JSON
-from datetime import datetime
-
 
 class Analysis(Base):
     __tablename__ = "analyses"
